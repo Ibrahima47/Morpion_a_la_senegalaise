@@ -1,4 +1,4 @@
-# Jeu des 3 Pions (Tic-Tac-Toe)
+# Jeu des 3 Pions (Tic-Tac-Toe variante sénégalaise) ![image](https://jeu-traditionnel.fr/howhoadi/2019/09/DSC_0366-scaled.jpg)
 
 ## Description
 Le jeu des 3 pions est une variante du classique Tic-Tac-Toe, où deux joueurs s'affrontent pour aligner trois de leurs pions sur une grille de 3x3. Ce projet implémente une version web simple du jeu en utilisant HTML, CSS et JavaScript.
