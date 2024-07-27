@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:image" content="../Assets/pions-jeu-backgammon-bois-schima-20.jpg">
+  <title>Trois Pions</title>
+  <link rel="shortcut icon" href="../Assets/pieces.jpg">
+  <link rel="stylesheet" href="../CSS_files/trois_pions.css">
+  <script src="../JS_files/trois_pions_POO.js"></script>
+</head>
+<body>
+  <div class="board"> <!--THIS IS THE  GAME'S BOARD-->
+    
+    <div class="action-buttons-container ">
+      <button id="resetting" class="action-button" type="button" value="1" onclick="game.restart()" hidden>Restart Game</button>
+      <button id="starting" class="action-button" type="button" value="1" onclick="game.start()">Start New Game</button>
+      <button id="ending" class="action-button" type="button" value="1" onclick="game.exit()" hidden>Exit Game</button>
+    </div>
+
+    <div class="storyteller nice-text shadowed" disabled>  <!--THIS IS WHERE THE IN GAME IFORMATIONS SHOW UP-->
+    </div>
+    <div class="container">
+
+      <div class="guest-box boxes piece-box-item" hidden> <!--HERE LIES THE GUEST'S PIECES WHEN THE GAME IS LAUNCHED-->
+        <h1 id="user1" class="username nice-text underline piece-box-item" hidden>player1</h1>
+        <img draggable="true" class="piece not-allowed-action guest piece-box-item" hidden id="G1" src="../Assets/pion-beige.jpg" alt="" srcset="">
+        <img draggable="true" class="piece not-allowed-action guest piece-box-item" hidden id="G2" src="../Assets/pion-beige.jpg" alt="" srcset="">
+        <img draggable="true" class="piece not-allowed-action guest piece-box-item" hidden id="G3" src="../Assets/pion-beige.jpg" alt="" srcset="">
+      </div> 
+      
+      <div class="game"> <!--THESE ARE THE CELLS OF THE GAME-->
+        <div class="row">
+          <button title="cell" disabled  class="cell" id="a1" type="button" value="1" onclick="possiblemvs = [4,8,5];changeStatus(event.currentTarget)"></button>
+          <button title="cell" disabled  class="cell" id="a2" type="button" value="2" onclick=" possiblemvs = [7,9,5];changeStatus(event.currentTarget)"></button>
+          <button title="cell" disabled  class="cell" id="a3" type="button" value="3" onclick=" possiblemvs = [8,5,6];changeStatus(event.currentTarget)"></button>
+        </div>
+        <div class="row">
+          <button title="cell" disabled  class="cell" id="b1" type="button" value="4" onclick=" possiblemvs = [7,5,1];changeStatus(event.currentTarget)"></button>
+          <button title="cell" disabled  class="cell" id="b2" type="button" value="5" onclick=" possiblemvs = [9,6,3,2,1,4,7,8];changeStatus(event.currentTarget)"></button>
+          <button title="cell" disabled  class="cell" id="b3" type="button" value="6" onclick=" possiblemvs = [9,5,3,];changeStatus(event.currentTarget)"></button>
+        </div>
+        <div class="row">
+          <button title="cell" disabled  class="cell" id="c1" type="button" value="7" onclick=" possiblemvs = [4,5,2];changeStatus(event.currentTarget)"></button>
+          <button title="cell" disabled  class="cell" id="c2" type="button" value="8" onclick=" possiblemvs = [1,5,3];changeStatus(event.currentTarget)"></button>
+          <button title="cell" disabled  class="cell" id="c3" type="button" value="9" onclick=" possiblemvs = [2,5,6];changeStatus(event.currentTarget)"></button>
+        </div>
+      </div>
+
+      <div class="host-box boxes piece-box-item" hidden> <!--HERE LIES THE HOST'S PIECES WHEN THE GAME IS LAUNCHED-->
+        <h1 id="user2" class="username nice-text underline piece-box-item" hidden>player2</h1>
+        <img draggable="true" class="piece not-allowed-action host piece-box-item" hidden id="H1" src="../Assets/pions-jeu-backgammon-bois-schima-20.jpg" alt="" srcset="">
+        <img draggable="true" class="piece not-allowed-action host piece-box-item" hidden id="H2" src="../Assets/pions-jeu-backgammon-bois-schima-20.jpg" alt="" srcset="">
+        <img draggable="true" class="piece not-allowed-action host piece-box-item" hidden id="H3" src="../Assets/pions-jeu-backgammon-bois-schima-20.jpg" alt="" srcset="">
+      </div>  
+
+    </div>
+    
+  </div>
+</body>
+</html>
