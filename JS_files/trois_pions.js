@@ -23,12 +23,12 @@ let player1 = {
       //  if firstMovePos : store ; cell.toggleClass is full 
       //  
   //  There're no remaining pieces
-  this.pieces.forEach(piece =>{
-    piece.addEventListener('click',(e)=>{
-      let data = e.dataTransfert.setData('text',e.currentTarget.id);
-      alert (`attached data for piece ${e.currentTarget.id} is ${data}`)
-    })
-  })
+  // this.pieces.forEach(piece =>{
+  //   piece.addEventListener('click',(e)=>{
+  //     let data = e.dataTransfert.setData('text',e.currentTarget.id);
+  //     alert (`attached data for piece ${e.currentTarget.id} is ${data}`)
+  //   })
+  // })
 
   game.switchTurn() //  last action after making move
   },
