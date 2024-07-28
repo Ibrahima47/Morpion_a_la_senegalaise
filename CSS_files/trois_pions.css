@@ -18,6 +18,16 @@
     border-color: rgb(240, 42, 28);
   }
 }
+@keyframes selected {
+  from{
+    border-width: 5px;
+    border-color: green;
+    rotate: 0;
+  }
+  to{
+    transform: rotate(360);
+  }
+}
 
 body{
   display: flex;
@@ -182,4 +192,8 @@ body{
 } 
 .username{
   pointer-events: none;
+}
+.moving{
+  background-color: orangered;
+  animation: is-good 1s infinite;
 }

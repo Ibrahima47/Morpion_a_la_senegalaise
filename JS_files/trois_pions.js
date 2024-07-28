@@ -4,7 +4,7 @@ let player1 = {
 
   username : 'Youssouf',
   remainingPieces : 3,
-  firstMovePos : undefined ,
+  firstMovePos : undefined , // a boolean value stating a piece is being selected
   lastMovePos : undefined ,
   pieceType : 'guest',
   pieces:document.querySelectorAll(`.${this.pieceType}`),
@@ -23,22 +23,18 @@ let player1 = {
       //  if firstMovePos : store ; cell.toggleClass is full 
       //  
   //  There're no remaining pieces
-  this.pieces.forEach(piece =>{
-    piece.addEventListener('click',(e)=>{
-      let data = e.dataTransfert.setData('text',e.currentTarget.id);
-      alert (`attached data for piece ${e.currentTarget.id} is ${data}`)
-    })
-  })
-
+  if (this.remainingPieces) this.remainingPieces--
   game.switchTurn() //  last action after making move
+ 
   },
   setUsername(newName){
     this.username = newName;
   },
   reset(){
     this.remainingPieces = 3;
-    this.firstMovePos = undefined;
-    this.lastMovePos = undefined;
+    // a boolean value that indicates wether a piece is currently selected
+    this.firstMovePos = false;
+    this.selectedPiece = undefined;
     let pieces=document.querySelectorAll(`.${this.pieceType}`)
     pieces.forEach(piece => {
       console.log(piece.toggleAttribute('disabled'))
@@ -46,7 +42,7 @@ let player1 = {
       piece.classList.add('not-allowed-action')
       }
    );
-  }
+  },
 
 }
 
@@ -88,10 +84,11 @@ let player2 = {
       }
     );
     this.remainingPieces = 3;
-    this.firstMovePos = undefined;
-    this.lastMovePos = undefined;
+    // a boolean value that indicates wether a piece is currently selected
+    this.firstMovePos = false;
+    this.selectedPiece = undefined;
     
-  }
+  },
 
 }
 // show userName on the UI
@@ -100,41 +97,51 @@ let game ={
     host : player2,
     turn : undefined, // to determine who's making a move : undefined,guest,host
     board : undefined,// array of three pieces
+    winningMoves : [
+      ['1','2','3'],
+      ['4','5','6'],
+      ['7','8','9'],
+      ['1','4','7'],
+      ['2','5','8'],
+      ['3','6','9'],
+      ['1','5','9'],
+      ['7','5','3'],
+    ],
     pieces : document.querySelectorAll('.piece'),
     score : undefined, // as the name, it indicates score
     message : '', // as the name, it indicates score
     winner : false, // boolean type of value to determine weither there's a winner or not
 
+    
   start(){
     hideElementById('#resetting','#ending','#starting') // switch UI action buttons visibility 
     hideElementsByClass('.piece-box-item') // switch UI action buttons visibility 
-    // Initializing informations about the whole game
-    this.board = document.querySelectorAll('.cell')
-    
-    this.board.forEach(element => {
-      element.classList.toggle('is-empty')
-      element.toggleAttribute('disabled')
-    });
-    this.pieces.forEach(element => {
-      element.addEventListener('click', (event)=>{
-        alert(event.currentTarget.parentNode)
-      })
-      element.toggleAttribute('disabled')
-    });
-    // showing the username on the UI
-
+    // Defining and showing usernames on the UI
     if(!this.guest.username) this.guest.username="player1" 
     if(!this.host.username) this.host.username="player2" 
-    
     document.querySelector('#user1').innerText=player1.username 
     document.querySelector('#user2').innerText=player2.username 
     // verifying winner and eventually switching turn
+//  retrieve this part of code an insert it into calculate winner
     this.winner ?
       this.message=`We have a winner!
 Congratulations ${this.turn.username}` :
       this.message=this.switchTurn()
+    // Initializing informations about the whole game
+    this.board = document.querySelectorAll('.cell')
+    this.pieces = document.querySelectorAll('.piece'),
+    
+    this.board.forEach(element => {
+      element.classList.toggle('is-empty')
+      // element.toggleAttribute('disabled')
+      element.addEventListener('click',this.turn.makeMove)
+    });
+    this.pieces.forEach(element => {
+      // element.toggleAttribute('disabled')
+      element.addEventListener('click',this.selectPion)
+    });
+    // Showing ingame messages on the UI
     document.querySelector('.storyteller').innerHTML=`<p>${this.message}</p>`
-    console.log(this.turn.username)
   },
 
   restart(){
@@ -158,10 +165,6 @@ Congratulations ${this.turn.username}` :
     this.winner = false;
 
     document.querySelector('.storyteller').innerHTML=`<p>${this.message}</p>`
-    // let pieces=document.querySelectorAll(`.${this.turn.pieceType}`)
-    // pieces.forEach(piece => {
-    //   console.log(piece.classList.toggle('not-allowed-action'))
-    // });
   },
 // solve the  issue of only allowing action to the one whos has turn
   switchTurn(){
@@ -175,16 +178,41 @@ Congratulations ${this.turn.username}` :
     pieces.forEach(piece => {
       console.log(piece.classList.toggle('not-allowed-action'))
     });
+    console.log(`It's your turn, dear ${this.turn.username}!`)
     return `It's your turn, dear ${this.turn.username}!`
   },
 
-  calculateWinner(){
-    alert('comme')
-
+  selectPion(){
+    if (game.turn.selectedPiece) {
+      game.turn.selectedPiece.classList.toggle('moving') // disable selection of the previous clicked piece
+      }
+      game.turn.selectedPiece = this // retrieve selected piece
+      this.classList.toggle('moving')
+      let localise = this.parentNode.classList
+      if(localise.contains('cell')){// selected piece location to prepare for further actions 
+        possiblemvs.forEach(cell =>{
+          cell.classList.remove('possible-move')
+          cell.classList.add('possible-move')
+          cell.toggleAttribute('disabled')
+        })
+        console.log(game.turn.selectedPiece.id) // for  testing purpose
+        
+      }
+      else{
+        possiblemvs = ['1','2','3','4','5','6','7','8','9']
+      }
+      
+    // console.log(this.selectedPiece)
+    // event.currentTarget.classList.toggle('moving')
+    // if (true) {// player has pieces left
+    // }else{
+    //   console.log(`autro ${this.turn}`)
+    // }
   },
-
-  isMoveValid(){},
   
+  calculateWinner(){
+    alert (this.turn)
+  },
   cellValueToggler(val, elmt){
     let res=''
     !elmt ? res = val : res = elmt
@@ -194,42 +222,18 @@ Congratulations ${this.turn.username}` :
 }
 
 
-// let piece = {
-// id : document.querySelector('#G').addEventListener('click')
-
-// }
-// let piece = {
-// id : document.querySelector('#G').addEventListener('click')
-
-// }
-// let piece = {
-// id : document.querySelector('#')
-// }
-// let piece = {
-// id : document.querySelector('#')
-// }
-// let piece = {
-// id : document.querySelector('#')
-// }
-
 function hideElementById(...ids){
   ids.forEach(element => {
   document.querySelector(`${element}`).toggleAttribute('hidden')
   });
 }
 function hideElementsByClass(...classes){
-  console.log(classes.length)
   classes.forEach(element => {
-    console.log(element)
     // store all elements with the same class
     let node=document.querySelectorAll(element)
-    console.log(`noeud : ${node.length}`)
     node.forEach(child => {
       child.toggleAttribute('hidden')
     }
     )
-      // const element = array[i];
-      // console.log(document.querySelector(`${element}`).item(i))
     })
-  // });
 }
