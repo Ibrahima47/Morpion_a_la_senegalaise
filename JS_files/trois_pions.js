@@ -23,12 +23,12 @@ let player1 = {
       //  if firstMovePos : store ; cell.toggleClass is full 
       //  
   //  There're no remaining pieces
-  // this.pieces.forEach(piece =>{
-  //   piece.addEventListener('click',(e)=>{
-  //     let data = e.dataTransfert.setData('text',e.currentTarget.id);
-  //     alert (`attached data for piece ${e.currentTarget.id} is ${data}`)
-  //   })
-  // })
+  this.pieces.forEach(piece =>{
+    piece.addEventListener('click',(e)=>{
+      let data = e.dataTransfert.setData('text',e.currentTarget.id);
+      alert (`attached data for piece ${e.currentTarget.id} is ${data}`)
+    })
+  })
 
   game.switchTurn() //  last action after making move
   },
@@ -121,16 +121,20 @@ let game ={
       })
       element.toggleAttribute('disabled')
     });
-    this.winner?this.message=`We have a winner!
-Congratulations ${this.turn.username}`:this.message=this.switchTurn()
+    // showing the username on the UI
+
+    if(!this.guest.username) this.guest.username="player1" 
+    if(!this.host.username) this.host.username="player2" 
+    
+    document.querySelector('#user1').innerText=player1.username 
+    document.querySelector('#user2').innerText=player2.username 
+    // verifying winner and eventually switching turn
+    this.winner ?
+      this.message=`We have a winner!
+Congratulations ${this.turn.username}` :
+      this.message=this.switchTurn()
     document.querySelector('.storyteller').innerHTML=`<p>${this.message}</p>`
     console.log(this.turn.username)
-    this.guest.username
-      ? document.querySelector('#user1').innerText=player1.username 
-      : this.guest.username="player1" 
-    this.host.username
-    ? document.querySelector('#user2').innerText=player2.username 
-    : this.host.username="player2" 
   },
 
   restart(){
