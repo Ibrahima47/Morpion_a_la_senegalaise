@@ -1,10 +1,11 @@
 # Jeu des 3 Pions (Tic-Tac-Toe variante sénégalaise) ![image](Assets/illustratif.jpg)
 
 ## Description
-<video width="320" height="240" controls>
+<video width="620" height="540" controls>
   <source src="Assets/Découvrez le jeu des 3 pions_3.mp4" type="video/mp4">
   Votre navigateur ne supporte pas les vidéos HTML5.
 </video>
+
 Le jeu des <u>__* 3 pions *__</u> est une variante du classique Tic-Tac-Toe, où deux joueurs s'affrontent pour aligner trois de leurs pions sur une grille de 3x3. Ce projet implémente une version web simple du jeu en utilisant HTML, CSS et JavaScript.
 
 ## Technologies utilisées
